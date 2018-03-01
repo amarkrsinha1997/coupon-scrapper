@@ -10,6 +10,7 @@ Follow [this](https://www.youtube.com/watch?v=vISRn5qFrkM) Tutorial to create a 
 Keep it in the same directory as of scrapper!
 change file name to coupon-scrapper.json
 then 
+Get email-id rom the service-file and share your new create sheet to that email and now you are ready to go
 ```
 python couponScrapper.py
 ```
