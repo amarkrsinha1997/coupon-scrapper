@@ -6,4 +6,10 @@ pip install selenium
 pip install bs4
 pip install pygsheets
 ```
-Follow [this](https://www.youtube.com/watch?v=vISRn5qFrkM) Tutorial to create a service File
+Follow [this](https://www.youtube.com/watch?v=vISRn5qFrkM) Tutorial to create a service file follow it only till creatting service file :smile:
+Keep it in the same directory as of scrapper!
+change file name to coupon-scrapper.json
+then 
+```
+python couponScrapper.py
+```
