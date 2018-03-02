@@ -9,17 +9,32 @@ from selenium import webdriver
 
 #Activating the selenium module for use in chrome headless browser
 #so that the module can run in background
-options = webdriver.ChromeOptions()
-options.add_argument('headless')
-driver = webdriver.Chrome('./chromedriver',chrome_options=options)
+try:
+	options = webdriver.ChromeOptions()
+	options.add_argument('headless')
+	driver = webdriver.Chrome('./chromedriver',chrome_options=options)
+except:
+	try:
+		options = webdriver.ChromeOptions()
+		options.add_argument('headless')
+		driver = webdriver.Chrome(chrome_options=options)
+	except Exception as e:
+		raise e
+
+
+jsonFile = open('coupon-scrapper.json')
+email = json.load(jsonFile.read())['client_email']
+print('\n\n\n'+email + ' \nPlease share your sheet with this email\n\n\n')
+
 
 
 #authorizing and connecting to the sheet name couponScrapper using the jsonfile
 #couponScrapper
 try: 
 	googleCloud = pygsheets.authorize(service_file='coupon-scrapper.json')
+
 	sheetName = input('Enter the name of workSheet that you have created and gave the access : ')
-	workSheet = googleCloud.open(sheetName).sheet1
+	workSheet = googleCloud.open(sheetName or 'couponScrapper').sheet1
 except Exception as e:
 	url= 'https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html'
 	print('''Include the service account file you can watch the tutorial here ({0}) to create service file
@@ -48,15 +63,15 @@ def appendRow(row):
 def loadMorePage(url):
 	driver.get(url)
 	loadMoreButton = driver.find_element_by_class_name('load-more-offers')
-	print('Wait while loading all the offer in the page.....')
+	print('Wait while loading all the offer in the page.....', end='')
 	while True:
-
+		print('.', end='')
 		try:
 			loadMoreButton.click()
 		except Exception as e:
 			break
 		time.sleep(2)
-	print('Offer loaded....')
+	print('\nOffer loaded....')
 	return bs4.BeautifulSoup(driver.page_source, 'html.parser')
 
 
